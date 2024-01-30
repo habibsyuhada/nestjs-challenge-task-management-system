@@ -9,14 +9,18 @@ export class UsersService {
 	constructor(
 		@InjectRepository(User)
 		private userRepository: Repository<User>,
-	){}
+	) {}
 
 	async findAll(): Promise<User[]> {
 		return this.userRepository.find();
 	}
 
 	async findOne(id: number): Promise<User> {
-		return this.userRepository.findOne({where: {id}});
+		return this.userRepository.findOne({ where: { id } });
+	}
+
+	async findOneByEmail(email: string): Promise<User> {
+		return this.userRepository.findOne({ where: { email } });
 	}
 
 	async create(user: Partial<User>): Promise<User> {
@@ -27,7 +31,7 @@ export class UsersService {
 
 	async update(id: number, user: Partial<User>): Promise<User> {
 		await this.userRepository.update(id, user);
-		return this.userRepository.findOne({where: {id}});
+		return this.userRepository.findOne({ where: { id } });
 	}
 
 	async delete(id: number): Promise<void> {
@@ -35,10 +39,10 @@ export class UsersService {
 	}
 
 	async encryptPassword(password: string) {
-    return await bcrypt.hash(password, 10);
-  }
+		return await bcrypt.hash(password, 10);
+	}
 
 	async comparePassword(password: string, hash: string) {
-    return await bcrypt.compare(password, hash);
-  }
+		return await bcrypt.compare(password, hash);
+	}
 }

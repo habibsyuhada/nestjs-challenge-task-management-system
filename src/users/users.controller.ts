@@ -1,23 +1,34 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	NotFoundException,
+	Param,
+	Post,
+	Put,
+	UseGuards,
+} from '@nestjs/common';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('users')
+@UseGuards(JwtAuthGuard)
 export class UsersController {
-	constructor(private readonly usersService: UsersService){}
+	constructor(private readonly usersService: UsersService) {}
 
 	@Get()
-	async findAll(): Promise<User[]>{
+	async findAll(): Promise<User[]> {
 		return this.usersService.findAll();
 	}
 
 	@Get(':id')
 	async findOne(@Param('id') id: number): Promise<User> {
 		const user = await this.usersService.findOne(id);
-		if(!user){
+		if (!user) {
 			throw new NotFoundException('User does not exist!');
-		}
-		else{
+		} else {
 			return user;
 		}
 	}
@@ -28,14 +39,14 @@ export class UsersController {
 	}
 
 	@Put(':id')
-	async update(@Param('id') id:number, @Body() user: User): Promise<any> {
+	async update(@Param('id') id: number, @Body() user: User): Promise<any> {
 		return this.usersService.update(id, user);
 	}
 
 	@Delete(':id')
-	async delete(@Param('id') id:number): Promise<any> {
+	async delete(@Param('id') id: number): Promise<any> {
 		const user = await this.usersService.findOne(id);
-		if(!user){
+		if (!user) {
 			throw new NotFoundException('User does not exist!');
 		}
 		return this.usersService.delete(id);
