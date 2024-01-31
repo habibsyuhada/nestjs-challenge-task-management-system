@@ -3,8 +3,10 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
+import { UsersModule } from './modules/users.module';
 import { AuthModule } from './auth/auth.module';
+import { ProjectsModule } from './modules/projects.module';
+import { TasksModule } from './modules/tasks.module';
 
 @Module({
 	imports: [
@@ -19,10 +21,12 @@ import { AuthModule } from './auth/auth.module';
 			database: process.env.DBNAME,
 			entityPrefix: process.env.PREFIXTABLE,
 			ssl: true,
-			entities: [__dirname + '/**/*.entity{.ts,.js}'],
+			autoLoadEntities: true,
 			synchronize: true,
 		}),
 		AuthModule,
+		ProjectsModule,
+		TasksModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

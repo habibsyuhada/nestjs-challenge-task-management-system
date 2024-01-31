@@ -9,8 +9,8 @@ import {
 	Put,
 	UseGuards,
 } from '@nestjs/common';
-import { User } from './user.entity';
-import { UsersService } from './users.service';
+import { User } from '../entities/user.entity';
+import { UsersService } from '../services/users.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('users')
@@ -24,7 +24,7 @@ export class UsersController {
 	}
 
 	@Get(':id')
-	async findOne(@Param('id') id: number): Promise<User> {
+	async findOne(@Param('id') id: string): Promise<User> {
 		const user = await this.usersService.findOne(id);
 		if (!user) {
 			throw new NotFoundException('User does not exist!');
@@ -39,12 +39,12 @@ export class UsersController {
 	}
 
 	@Put(':id')
-	async update(@Param('id') id: number, @Body() user: User): Promise<any> {
+	async update(@Param('id') id: string, @Body() user: User): Promise<any> {
 		return this.usersService.update(id, user);
 	}
 
 	@Delete(':id')
-	async delete(@Param('id') id: number): Promise<any> {
+	async delete(@Param('id') id: string): Promise<any> {
 		const user = await this.usersService.findOne(id);
 		if (!user) {
 			throw new NotFoundException('User does not exist!');

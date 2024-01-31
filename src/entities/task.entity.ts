@@ -6,29 +6,26 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class User {
-	@PrimaryGeneratedColumn()
-	id: number;
+export class Task {
+	@PrimaryGeneratedColumn('uuid')
+	id: string;
 
 	@Column({
 		nullable: false,
 	})
+	projectId: string;
+
+	@Column()
 	name: string;
 
 	@Column({
-		nullable: false,
-		unique: true,
+		nullable: true,
 	})
-	email: string;
-
-	@Column({
-		nullable: false,
-	})
-	password: string;
+	description: string;
 
 	@CreateDateColumn({
 		type: 'timestamp',
 		default: null,
 	})
-	created_date: Date;
+	createdDate: Date;
 }
