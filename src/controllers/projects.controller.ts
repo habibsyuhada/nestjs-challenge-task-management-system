@@ -15,7 +15,9 @@ import { TasksService } from '../services/tasks.service';
 import { Project } from '../entities/project.entity';
 import { ProjectsService } from '../services/projects.service';
 import { DeleteResult, UpdateResult } from 'typeorm';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Projects')
 @Controller('projects')
 @UseGuards(JwtAuthGuard)
 export class ProjectsController {
