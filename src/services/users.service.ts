@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { User } from '../entities/user.entity';
 import * as bcrypt from 'bcryptjs';
 
@@ -29,9 +29,8 @@ export class UsersService {
 		return this.userRepository.save(newuser);
 	}
 
-	async update(id: string, user: Partial<User>): Promise<User> {
-		await this.userRepository.update(id, user);
-		return this.userRepository.findOne({ where: { id } });
+	async update(id: string, user: Partial<User>): Promise<UpdateResult> {
+		return this.userRepository.update(id, user);
 	}
 
 	async delete(id: string): Promise<void> {
