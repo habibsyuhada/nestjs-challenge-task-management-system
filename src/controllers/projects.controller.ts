@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { Task } from 'src/entities/task.entity';
-import { TasksService } from 'src/services/tasks.service';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Task } from '../entities/task.entity';
+import { TasksService } from '../services/tasks.service';
 import { Project } from '../entities/project.entity';
 import { ProjectsService } from '../services/projects.service';
 
